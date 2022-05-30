@@ -42,9 +42,9 @@ try {
 
     const sliderThumbs = new Swiper(
         '.slider-thumbs', 
-        {
-            loop: true,
-            loopedSlides: 4,
+        {   
+            // loop: true,
+            // loopedSlides: 4,
             slidesPerView: 3,
             centeredSlides: true,
             spaceBetween: 5,
@@ -70,18 +70,23 @@ try {
     const sliderMain = new Swiper('.slider-main', {
         loop: true,
         thumbs: {
-            swiper: sliderThumbs
+            swiper: sliderThumbs,
         },
-        loopedSlides: 4
+        // loopedSlides: 4
     });
 
-    // sliderThumbs.controller.control = sliderMain;
+    // do not work ((
+    //sliderThumbs.controller.control = sliderMain;
     // sliderMain.controller.control = sliderThumbs;
 
     sliderMain.on('slideChange', () => {
         for (let i = 0; i < videos.length; i++) {
             videos[i].pause();
         }
+    });
+
+    sliderMain.on('slideChange', (swiper) => {
+        sliderThumbs.slideTo(swiper.realIndex);
     });
 
 //  Скрытие переключения слайдов
